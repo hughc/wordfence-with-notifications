@@ -136,7 +136,7 @@ class wfIssues {
 			'totalWarningIssues' => $totalWarningIssues,
 			'level' => $level
 			));
-		do_action('wf_new_issues', $content_note);
+			do_action('wf_new_issues', $content_note);
 		
 		if ($doEmail) wp_mail(implode(',', $emails), $subject, $content, 'Content-type: text/html');
 	}

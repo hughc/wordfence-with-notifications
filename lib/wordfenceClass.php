@@ -1137,7 +1137,10 @@ class wordfence {
 		}
 	}
 	public static function ajax_sendTestEmail_callback(){
-		$result = wp_mail($_POST['email'], "Wordfence Test Email", "This is a test email from " . site_url() . ".\nThe IP address that requested this was: " . wfUtils::getIP());
+
+		$content =  "This is a test email from " . site_url() . ".\nThe IP address that requested this was: " . wfUtils::getIP();
+		do_action('wf_alert', $content);
+		$result = wp_mail($_POST['email'], "Wordfence Test Email", $content);
 		$result = $result ? 'True' : 'False';
 		return array('result' => $result);
 	}
