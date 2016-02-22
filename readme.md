@@ -6,6 +6,7 @@ The example integration I have created is a proof-of-concept [Slack channel post
 
 The 'smarts' that could be built into a given integration is only as good as the granularity of data passed in the action hooks; for now, there is not much to go on, only a few text strings. 
 
+It is not recommended for production sites. It is a straight fork of Wordfence with the bare minimum of changes to the codebase to give the plugin a unique slug; it uses the same table names and wp_options keys for storing data, and should work as a drop-in replacement for Wordfence, but this has not been exhaustively tested.
 
 ### notification action hooks
 #### wf_new_issues
