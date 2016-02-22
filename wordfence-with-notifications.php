@@ -1,11 +1,10 @@
 <?php
 /*
-Plugin Name: Wordfence Security
+Plugin Name: Wordfence Security (with Notifications)
 Plugin URI: http://www.wordfence.com/
-Description: Wordfence Security - Anti-virus, Firewall and High Speed Cache
-Author: Wordfence
+Description: Wordfence Security with added Notifications
+Author: Hugh Campbell
 Version: 6.0.15
-Author URI: http://www.wordfence.com/
 */
 if(defined('WP_INSTALLING') && WP_INSTALLING){
 	return;

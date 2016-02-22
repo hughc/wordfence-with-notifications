@@ -243,7 +243,7 @@ class wfUtils {
 		return false;
 	}
 	public static function getBaseURL(){
-		return plugins_url() . '/wordfence/';
+		return plugins_url() . '/wordfence-with-notifications/';
 	}
 	public static function getPluginBaseDir(){
 		if(function_exists('wp_normalize_path')){ //Older WP versions don't have this func and we had many complaints before this check.
