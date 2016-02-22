@@ -3262,7 +3262,8 @@ HTML;
 	public static function alert($subject, $alertMsg, $IP){
 		wfConfig::inc('totalAlertsSent');
 		$emails = wfConfig::getAlertEmails();
-		if(sizeof($emails) < 1){ return; }
+		$doEmail = sizeof($emails) < 1;
+		if(!$doEmail && !has_action('wf_alert')){ return; }
 
 		$IPMsg = "";
 		if($IP){
@@ -3323,7 +3324,8 @@ HTML;
 			}
 		}
 		wfConfig::set('lastEmailHash', time() . ':' . $hash);
-		wp_mail(implode(',', $emails), $subject, $content);
+		do_action('wf_alert', $alertMsg, $IPMsg);
+		if ($doEmail) wp_mail(implode(',', $emails), $subject, $content);
 	}
 	public static function getLog(){
 		if(! self::$wfLog){

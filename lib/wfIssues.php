@@ -84,8 +84,8 @@ class wfIssues {
 		$emails = wfConfig::getAlertEmails();
 		$shortSiteURL = preg_replace('/^https?:\/\//i', '', site_url());
 		$subject = "[Wordfence Alert] Problems found on $shortSiteURL";
-
-		if(sizeof($emails) < 1){ return; }
+		$doEmail = sizeof($emails) >= 1;
+		if(!$doEmail && !has_action('wf_new_issues')){ return; }
 		if($level < 1){ return; }
 		if($level == 2 && $this->totalCriticalIssues < 1 && $this->totalWarningIssues < 1){ return; }
 		if($level == 1 && $this->totalCriticalIssues < 1){ return; }
@@ -128,8 +128,17 @@ class wfIssues {
 			'totalWarningIssues' => $totalWarningIssues,
 			'level' => $level
 			));
+
+		$content_note = wfUtils::tmpl('notification_newIssues.php', array(
+			'isPaid' => wfConfig::get('isPaid'),
+			'issues' => $finalIssues,
+			'totalCriticalIssues' => $totalCriticalIssues,
+			'totalWarningIssues' => $totalWarningIssues,
+			'level' => $level
+			));
+		do_action('wf_new_issues', $content_note);
 		
-		wp_mail(implode(',', $emails), $subject, $content, 'Content-type: text/html');
+		if ($doEmail) wp_mail(implode(',', $emails), $subject, $content, 'Content-type: text/html');
 	}
 	public function deleteIssue($id){ 
 		$this->getDB()->queryWrite("delete from " . $this->issuesTable . " where id=%d", $id);
